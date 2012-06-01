@@ -8,6 +8,8 @@ pwgen_bin=${pwgen_bin:-$(which pwgen 2>/dev/null)}
 makepasswd_bin=${makepasswd_bin:-$(which makepasswd 2>/dev/null)}
 xsel_bin=${xsel_bin:-$(which xsel 2>/dev/null)}
 tr_bin=${tr_bin:-$(which tr 2>/dev/null)}
+xargs_bin=${xargs_bin:-$(which xargs 2>/dev/null)}
+pwdlist_bin=${pwdlist_bin:-$(which pwdlist 2>/dev/null)}
 
 pws_path()
 {
@@ -27,11 +29,13 @@ check_binary()
 
 _pwdcomp()
 {
+  [ ! -x "$pwdlist_bin" ] && return 1
+  [ ! -x "$xargs_bin"   ] && return 1
   local cur="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=( $(compgen -o filenames -W "$(pwdls | xargs echo)" -- "${cur}" ) )
+  COMPREPLY=( $(compgen -o filenames -W "$($pwdlist_bin | $xargs_bin echo)" -- "${cur}" ) )
   return 0
 }
 
-check_binary $gpg_bin  "gpg not found"
-check_binary $xsel_bin "xsel not found"
-check_binary $tr_bin   "tr not found"
+check_binary $gpg_bin   "gpg not found"
+check_binary $xsel_bin  "xsel not found"
+check_binary $tr_bin    "tr not found"
