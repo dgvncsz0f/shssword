@@ -37,10 +37,8 @@ _pwdcomp()
   return 0
 }
 
-check_binary $gpg_bin     "error: gpg not found"  && exit 1
-check_binary $xsel_bin    "error: xsel not found" && exit 1
-check_binary $tr_bin      "error: tr not found"   && exit 1
+check_binary $gpg_bin     "error: gpg not found"
+check_binary $xsel_bin    "error: xsel not found"
+check_binary $tr_bin      "error: tr not found"
 check_binary $xargs_bin   "warning: xargs not found, _pwdcomp will not work!"
 check_binary $pwdlist_bin "warning: pwdlist not found, _pwdcomp will not work!"
-
-exit 0
