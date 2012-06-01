@@ -2,14 +2,9 @@
 
 pwsroot="$HOME/pwsstore"
 
-gpg_bin=${gpg_bin:-$(which gpg 2>/dev/null)}
 perl_bin=${perl_bin:-$(which perl 2>/dev/null)}
 pwgen_bin=${pwgen_bin:-$(which pwgen 2>/dev/null)}
 makepasswd_bin=${makepasswd_bin:-$(which makepasswd 2>/dev/null)}
-xsel_bin=${xsel_bin:-$(which xsel 2>/dev/null)}
-tr_bin=${tr_bin:-$(which tr 2>/dev/null)}
-xargs_bin=${xargs_bin:-$(which xargs 2>/dev/null)}
-pwdlist_bin=${pwdlist_bin:-$(which pwdlist 2>/dev/null)}
 
 pws_path()
 {
@@ -18,27 +13,13 @@ pws_path()
     read -p "$pwsroot does not exist; should i create it [y/N]? " answer
     [ "$answer" = "y" ] && mkdir "$pwsroot"
   fi
-  local file=$(/usr/bin/basename $1)
+  local file=$(basename "$1")
   pws_path="${pwsroot}/${file}.gpg"
-}
-
-check_binary()
-{
-  [ -x "$1" ] || { echo "$2"; return 0; }
-  return 1
 }
 
 _pwdcomp()
 {
-  [ ! -x "$pwdlist_bin" ] && return 1
-  [ ! -x "$xargs_bin"   ] && return 1
   local cur="${COMP_WORDS[COMP_CWORD]}"
-  COMPREPLY=( $(compgen -o filenames -W "$($pwdlist_bin | $xargs_bin echo)" -- "${cur}" ) )
+  COMPREPLY=( $(compgen -o filenames -W "$(pwdlist | xargs echo)" -- "${cur}" ) )
   return 0
 }
-
-check_binary $gpg_bin     "pwdcnf: error: gpg not found"
-check_binary $xsel_bin    "pwdcnf: error: xsel not found"
-check_binary $tr_bin      "pwdcnf: error: tr not found"
-check_binary $xargs_bin   "pwdcnf: warning: xargs not found, _pwdcomp will not work!"
-check_binary $pwdlist_bin "pwdcnf: warning: pwdlist not found, _pwdcomp will not work!"

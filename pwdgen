@@ -1,7 +1,7 @@
 #!/bin/bash
 
-pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
-file=$(/usr/bin/basename $1)
+pwshome=$(dirname $(readlink -f "$0"))
+file=$(basename "$1")
 backend=""
 size=${2:-20}
 
@@ -67,7 +67,7 @@ do
   if [ "$take_this" == "y" ]
   then
     echo
-    echo "$mkpasswd" | $gpg_bin --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
+    echo "$mkpasswd" | gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
     /bin/chmod 600 "$pws_path"
     "$pwshome"/pwdfor "$file"
     exit 0

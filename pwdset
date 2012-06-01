@@ -1,10 +1,10 @@
 #!/bin/bash
 
-pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
+pwshome=$(dirname $(readlink -f "$0"))
 
 . "$pwshome/pwdcnf"
 
-file=$(/usr/bin/basename $1)
+file=$(basename "$1")
 pws_path "$file"
 
 while true
@@ -22,7 +22,7 @@ do
     if [ "$take_this" == "y" ]
     then
       echo
-      echo "$nextpwd0" | $gpg_bin --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
+      echo "$nextpwd0" | gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
       /bin/chmod 600 "$pws_path"
       $pwshome/pwdfor "$file"
       exit 0

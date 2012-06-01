@@ -1,9 +1,9 @@
 #!/bin/bash
 
-pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
+pwshome=$(dirname $(readlink -f "$0"))
 
 . "$pwshome/pwdcnf"
 
 pws_path "$1"
 
-/bin/rm -f "$pws_path"
+rm -f "$pws_path"
