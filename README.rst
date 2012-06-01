@@ -4,7 +4,7 @@
 
 very simple password management system
 
-insert/udpate
+insert/update
 =============
 
 ::
@@ -24,17 +24,18 @@ querying
   $ pwdshow :key
   
   # copy to clipboard
-  $ pwdfor :key
+  $ pwdcopy :key
   
   # list all passwords
-  $ pwdls
+  $ pwdlist
 
 deleting
 ========
 
 ::
 
-  # pwddel :key
+  # remove a given key
+  $ pwdrm :key
 
 bash completion
 ===============
@@ -45,3 +46,4 @@ bash completion
   complete -o filenames -F _pwdcomp pwdshow
   complete -o filenames -F _pwdcomp pwdfor
   complete -o filenames -F _pwdcomp pwddel
+
