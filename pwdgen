@@ -69,7 +69,7 @@ do
     echo
     echo "$mkpasswd" | gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
     /bin/chmod 600 "$pws_path"
-    "$pwshome"/pwdfor "$file"
+    "$pwshome"/pwdcopy "$file"
     exit 0
   elif [ "$take_this" == "q" ]
   then
