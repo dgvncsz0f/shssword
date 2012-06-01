@@ -1,0 +1,15 @@
+#!/bin/bash
+
+pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
+
+. "$pwshome/pwdcnf"
+
+pws_path "$1"
+
+if [ -f "$pws_path" ]
+then
+  $gpg_bin --no-verbose -q -d "$pws_path"
+else
+  echo "error: $1 not found" >&2
+  exit 1
+fi

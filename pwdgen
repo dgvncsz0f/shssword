@@ -1,0 +1,79 @@
+#!/bin/bash
+
+pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
+file=$(/usr/bin/basename $1)
+backend=""
+size=${2:-20}
+
+. "$pwshome/pwdcnf"
+
+pws_path "$file"
+
+mkpasswd_perl()
+{
+  local f=$1
+  mkpasswd=$($perl_bin -e "use Crypt::GeneratePassword qw (word chars); my \$length = $size; do {print ucfirst($f(5,5)); print int(rand()*100); \$length -= 5;} while (\$length > 0);")
+}
+
+mkpasswd_pwgen()
+{
+  mkpasswd=$($pwgen_bin --numerals --capitalize --secure --symbols $size 1)
+}
+
+mkpasswd_makepasswd()
+{
+  mkpasswd=$($makepasswd_bin --chars $size)
+}
+
+genpasswd()
+{
+  if [ -z "$backend" ]
+  then
+    echo "backends: "
+    local ix=0
+    [ -x "$perl_bin"       ] && { echo "  pw) $perl_bin (word )"; let ix=$ix+1; }
+    [ -x "$perl_bin"       ] && { echo "  pc) $perl_bin (chars) *"; let ix=$ix+1; }
+    [ -x "$pwgen_bin"      ] && { echo "  pg) $pwgen_bin"; let ix=$ix+1; }
+    [ -x "$makepasswd_bin" ] && { echo "  ma) $makepasswd_bin"; let ix=$ix+1; } 
+    read -p "which one? " backend
+  fi
+  case "$backend" in
+    ma )
+      mkpasswd_makepasswd
+      ;;
+    pg )
+      mkpasswd_pwgen
+      ;;
+    pw )
+      mkpasswd_perl word
+      ;;
+    pc )
+      mkpasswd_perl chars
+      ;;
+    * )
+      backend=pc
+      mkpasswd_perl chars
+  esac
+}
+
+
+echo "command: $0 $file $size"
+
+while true
+do
+  genpasswd
+  echo write \`$mkpasswd\' to $pws_path
+  read -n 1 -p "accept [y|N|q]? " take_this
+  if [ "$take_this" == "y" ]
+  then
+    echo
+    echo "$mkpasswd" | $gpg_bin --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
+    /bin/chmod 600 "$pws_path"
+    "$pwshome"/pwdfor "$file"
+    exit 0
+  elif [ "$take_this" == "q" ]
+  then
+    exit 0
+  fi
+  echo
+done

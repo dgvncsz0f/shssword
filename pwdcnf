@@ -1,0 +1,37 @@
+#!/bin/bash
+
+pwsroot="$HOME/pwsstore"
+
+gpg_bin=${gpg_bin:-$(which gpg 2>/dev/null)}
+perl_bin=${perl_bin:-$(which perl 2>/dev/null)}
+pwgen_bin=${pwgen_bin:-$(which pwgen 2>/dev/null)}
+makepasswd_bin=${makepasswd_bin:-$(which makepasswd 2>/dev/null)}
+xsel_bin=${xsel_bin:-$(which xsel 2>/dev/null)}
+tr_bin=${tr_bin:-$(which tr 2>/dev/null)}
+
+pws_path()
+{
+  if [ ! -d "$pwsroot" ]
+  then
+    read -p "$pwsroot does not exist; should i create it [y/N]? " answer
+    [ "$answer" = "y" ] && mkdir "$pwsroot"
+  fi
+  local file=$(/usr/bin/basename $1)
+  pws_path="${pwsroot}/${file}.gpg"
+}
+
+check_binary()
+{
+  [ -x "$1" ] || { echo "$2"; exit 1; }
+}
+
+_pwdcomp()
+{
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=( $(compgen -o filenames -W "$(pwdls | xargs echo)" -- "${cur}" ) )
+  return 0
+}
+
+check_binary $gpg_bin  "gpg not found"
+check_binary $xsel_bin "xsel not found"
+check_binary $tr_bin   "tr not found"

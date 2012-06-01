@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
+
+. "$pwshome/pwdcnf"
+
+/usr/bin/find -L "$pwsroot" -type f -name "*.gpg" -exec /usr/bin/basename \{\} .gpg \; | /usr/bin/sort
