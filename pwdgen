@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pwshome=$(/usr/bin/dirname $(/bin/readlink -f "$0"))
+pwshome=$(/usr/bin/dirname $($(which readlink) -f "$0"))
 file=$(/usr/bin/basename $1)
 backend=""
 size=${2:-20}
