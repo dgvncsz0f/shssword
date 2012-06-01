@@ -23,7 +23,7 @@ querying
   # show the password
   $ pwdshow :key
   
-  # copy to clipboard
+  # copy to primary selection
   $ pwdcopy :key
   
   # list all passwords
