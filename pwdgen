@@ -25,17 +25,27 @@ mkpasswd_makepasswd()
   mkpasswd=$($makepasswd_bin --chars $size)
 }
 
+showbackend()
+{
+  echo -n "$1"
+  shift
+  if "$@" 2>/dev/null
+  then
+    echo
+  else
+    echo " - not available"
+  fi
+}
+
 genpasswd()
 {
   if [ -z "$backend" ]
   then
-    echo "backends: "
-    local ix=0
-    [ -x "$perl_bin"       ] && { echo "  pw) $perl_bin (word )"; let ix=$ix+1; }
-    [ -x "$perl_bin"       ] && { echo "  pc) $perl_bin (chars) *"; let ix=$ix+1; }
-    [ -x "$pwgen_bin"      ] && { echo "  pg) $pwgen_bin"; let ix=$ix+1; }
-    [ -x "$makepasswd_bin" ] && { echo "  ma) $makepasswd_bin"; let ix=$ix+1; } 
-    read -p "which one? " backend
+    showbackend "  pw) $perl_bin (crypt-generatepassword : word )"   "$perl_bin" -e "use Crypt::GeneratePassword"
+    showbackend "  pc) $perl_bin (crypt-generatepassword : chars) *" "$perl_bin" -e "use Crypt::GeneratePassword"
+    showbackend "  pg) $pwgen_bin"                                   test -x "$pwgen_bin"
+    showbackend "  ma) $makepasswd_bin"                              test -x "$makepasswd_bin"
+    read -p "which one should I use? " backend
   fi
   case "$backend" in
     ma )
