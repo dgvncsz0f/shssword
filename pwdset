@@ -18,18 +18,10 @@ do
     echo "  password mismatch o.O"
   else
     echo
-    read -n 1 -p "accept [passwd='$nextpwd0'] [y/N/q]? " take_this
-    if [ "$take_this" == "y" ]
-    then
-      echo
-      echo "$nextpwd0" | gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
-      /bin/chmod 600 "$pws_path"
-      $pwshome/pwdcopy "$file"
-      exit 0
-    elif [ "$take_this" == "q" ]
-    then
-      exit 0
-    fi
+    echo "$nextpwd0" | gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
+    /bin/chmod 600 "$pws_path"
+    $pwshome/pwdcopy "$file"
+    exit 0
   fi
   echo
 done

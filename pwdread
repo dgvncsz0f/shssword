@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pwshome=$(dirname $(readlink -f "$0"))
+
+. "$pwshome/pwdcnf"
+
+file=$(basename "$1")
+pws_path "$file"
+
+gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path" -

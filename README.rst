@@ -15,6 +15,9 @@ insert/update
   # system-generated password
   $ pwdgen :key :size
 
+  # arbitrary string
+  $ cat /some/file | pwdread :key
+
 querying
 ========
 
