@@ -18,7 +18,7 @@ do
     echo "  password mismatch o.O"
   else
     echo
-    echo "$nextpwd0" | gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path"
+    echo "$nextpwd0" | "$pwshome/pwdread" "$file"
     /bin/chmod 600 "$pws_path"
     $pwshome/pwdcopy "$file"
     exit 0
