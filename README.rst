@@ -49,7 +49,7 @@ bash completion
 
   . pwdcnf
   complete -o filenames -F _pwdcomp pwdshow
-  complete -o filenames -F _pwdcomp pwdfor
+  complete -o filenames -F _pwdcomp pwdcopy
   complete -o filenames -F _pwdcomp pwddel
 
 dependencies
