@@ -41,10 +41,10 @@ genpasswd()
 {
   if [ -z "$backend" ]
   then
-    showbackend "  pw) $perl_bin (crypt-generatepassword : word )"   "$perl_bin" -e "use Crypt::GeneratePassword"
-    showbackend "  pc) $perl_bin (crypt-generatepassword : chars) *" "$perl_bin" -e "use Crypt::GeneratePassword"
-    showbackend "  pg) $pwgen_bin"                                   test -x "$pwgen_bin"
-    showbackend "  ma) $makepasswd_bin"                              test -x "$makepasswd_bin"
+    showbackend "  pw) perl (Crypt:GeneratePassword qw(word)   " "$perl_bin" -e "use Crypt::GeneratePassword"
+    showbackend "  pc) perl (Crypt:GeneratePassword qw(chars) *" "$perl_bin" -e "use Crypt::GeneratePassword"
+    showbackend "  pg) pwgen                                   " test -x "$pwgen_bin"
+    showbackend "  ma) makepasswd                              " test -x "$makepasswd_bin"
     read -p "which one should I use? " backend
   fi
   case "$backend" in
