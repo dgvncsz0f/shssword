@@ -6,7 +6,7 @@ set -o pipefail
 
 . "$pwshome/pwdcnf"
 
-"$pwshome"/pwdshow "$@" | tr -d $'\n' | xsel -b
+"$pwshome"/pwdshow "$@" | tr -d $'\n' | xsel -b && xsel -o -b | xsel -p
 
 if [ "$?" = 0 ]
 then
