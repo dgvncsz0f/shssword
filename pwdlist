@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pwshome=$(dirname $(readlink -f "$0"))
-
-. "$pwshome/pwdcnf"
+. "$pwshome/pwdcnf" || exit 1
 
 find -L "$pwsroot" -type f -name "*.gpg" -exec basename \{\} .gpg \; | sort

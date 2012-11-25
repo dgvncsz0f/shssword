@@ -80,3 +80,5 @@ tips
 * modify your $PATH variable to use these scripts;
 
 * use *gpg-agent*, makes life a lot easier;
+
+* export pwshome to the directory where pwdcnf lives in;

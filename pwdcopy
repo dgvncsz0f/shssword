@@ -1,17 +1,5 @@
 #!/bin/bash
 
-pwshome=$(dirname $(readlink -f "$0"))
-
 set -o pipefail
 
-. "$pwshome/pwdcnf"
-
-"$pwshome"/pwdshow "$@" | tr -d $'\n' | xsel -b && xsel -o -b | xsel -p
-
-if [ "$?" = 0 ]
-then
-  echo Ok
-else
-  echo fail
-  exit 1
-fi
+pwdshow "$@" | tr -d $'\n' | xsel -b && xsel -o -b | xsel -p

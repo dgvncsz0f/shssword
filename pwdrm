@@ -1,8 +1,6 @@
 #!/bin/bash
 
-pwshome=$(dirname $(readlink -f "$0"))
-
-. "$pwshome/pwdcnf"
+. "$pwshome/pwdcnf" || exit 1
 
 pws_path "$1"
 

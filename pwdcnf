@@ -1,10 +1,10 @@
 #!/bin/bash
 
-pwsroot="$HOME/pwsstore"
+pwsroot=${pwsroot:-$HOME/pwsstore}
 
-perl_bin=${perl_bin:-$(which perl 2>/dev/null)}
-pwgen_bin=${pwgen_bin:-$(which pwgen 2>/dev/null)}
-makepasswd_bin=${makepasswd_bin:-$(which makepasswd 2>/dev/null)}
+perl_bin=${perl_bin:-$(command -v perl 2>/dev/null)}
+pwgen_bin=${pwgen_bin:-$(command -v pwgen 2>/dev/null)}
+makepasswd_bin=${makepasswd_bin:-$(command -v makepasswd 2>/dev/null)}
 
 pws_path()
 {

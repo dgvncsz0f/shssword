@@ -1,11 +1,10 @@
 #!/bin/bash
 
-pwshome=$(dirname $(readlink -f "$0"))
+. "$pwshome/pwdcnf" || exit 1
+
 file=$(basename "$1")
 backend=""
 size=${2:-20}
-
-. "$pwshome/pwdcnf"
 
 pws_path "$file"
 
