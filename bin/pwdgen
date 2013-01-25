@@ -2,7 +2,7 @@
 
 . "$pwshome/pwdcnf" || exit 1
 
-file=$(basename "$1")
+file="$1"
 backend=""
 size=${2:-20}
 

@@ -13,7 +13,7 @@ pws_path()
     read -p "$pwsroot does not exist; should i create it [y/N]? " answer
     [ "$answer" = "y" ] && mkdir "$pwsroot"
   fi
-  local file=$(basename "$1")
+  local file="$1"
   pws_path="${pwsroot}/${file}.gpg"
 }
 

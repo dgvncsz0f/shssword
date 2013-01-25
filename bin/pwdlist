@@ -2,4 +2,9 @@
 
 . "$pwshome/pwdcnf" || exit 1
 
-find -L "$pwsroot" -type f -name "*.gpg" -exec basename \{\} .gpg \; | sort
+for file in $(cd "$pwsroot" && find -L . -type f -name "*.gpg" | sort)
+do
+length=$(expr length "$file")
+length=$(expr $length - 4)
+echo "$file" | cut -c -$length | cut -c 3-
+done
