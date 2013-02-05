@@ -3,5 +3,5 @@
 if test -r $pwshome/pwdcnf
 then
   . $pwshome/pwdcnf
-  complete -o filenames -F _pwdcomp pwdshow
+  complete -F _pwdcomp pwdshow
 fi
