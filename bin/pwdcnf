@@ -15,6 +15,7 @@ pws_path()
   fi
   local file="$1"
   pws_path="${pwsroot}/${file}.gpg"
+  mkdir -p $(dirname "$pws_path")
 }
 
 _pwdcomp()
