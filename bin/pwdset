@@ -2,8 +2,7 @@
 
 . "$pwshome/pwdcnf" || exit 1
 
-file=$(basename "$1")
-pws_path "$file"
+pws_path "$1"
 
 while true
 do

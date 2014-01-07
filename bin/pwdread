@@ -2,7 +2,6 @@
 
 . "$pwshome/pwdcnf" || exit 1
 
-file=$(basename "$1")
-pws_path "$file"
+pws_path "$1"
 
 gpg --default-recipient $USER --no-verbose --no-for-your-eyes-only -e --output "$pws_path" -
